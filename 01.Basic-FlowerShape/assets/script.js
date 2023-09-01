@@ -18,10 +18,14 @@ const ctx = canvas.getContext("2d");
 // so to make sure the canvas covers the entire browser window...
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
 // this code will run just once on the initial page load
 // so if you want to change canvas size(width & height) when you resize browser window...
 // then this code will have to set also inside resize event listener
 // so it runs every time resize even occurs in browser
+
+// shapes are drawn behind the older ones...
+ctx.globalCompositeOperation = "destination-over";
 
 // mouse pointer holder...
 const mousePointer = {
@@ -34,8 +38,13 @@ canvas.addEventListener("mousemove", (e) => {
   mousePointer.x = e.x;
   mousePointer.y = e.y;
 
-  clearAllPreviousFrames();
-  drawCircle();
+  // clearAllPreviousFrames();
+  // drawCircle();
+});
+
+window.addEventListener("resize", (e) => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 
 const clearAllPreviousFrames = () => {
@@ -45,21 +54,57 @@ const clearAllPreviousFrames = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
+// set value to be middle/center of the canvas
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+
+// global variable, to use as settings for our algorithm
+let hue = Math.random() * 360;
+let frameNumber = 0;
+let scale = 10; // this will play a role in making our radius grow so our flower grows from the center outwards
+let cSize = Math.random() * 20;
+let lineWidth = Math.random() * 10;
+let drawingFlower = Math.random() * 10; // by changing this value, generate different flowers...
+// let cSize = number;
+
+const colors = [
+  "green",
+  "black",
+  "blue",
+  "orange",
+  "orangered",
+  "pink",
+  "red",
+  "tomato",
+  "white",
+  "brown",
+  "gray",
+];
+
 const drawCircle = () => {
-  const circleSize = 50;
-  ctx.fillStyle = "tomato";
-  ctx.fill();
+  // 1st
+  // calculate position for this particle, for this particular animation frame
+  let angle = frameNumber * drawingFlower;
+  let radius = scale * Math.sqrt(frameNumber); // this will determine size of circular path our particle is taken
+  let positionX = radius * Math.sin(angle) + centerX; // Math.sine ==> does is it returns a number between -1 and +1
+  let positionY = radius * Math.cos(angle) + centerY; // Math.cos ==> does is it returns a number between +1 and -1
+
+  // 2nd
+  // use canvas api, built-in drawing methods, to draw a shape we wan...
+  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+  ctx.strokeStyle = colors[1]; // stroke properties
+  ctx.lineWidth = lineWidth; // stroke properties
 
   // circle drawing methods call...
   ctx.beginPath();
-  ctx.arc(mousePointer.x, mousePointer.y, circleSize, 0, Math.PI * 2);
-  //   ctx.arc(200, 200, circleSize, 0, Math.PI * 2);
-  //   ctx.closePath();
+  ctx.arc(positionX, positionY, cSize, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.fill(); // fill method call() for draw...
+  ctx.stroke(); // stroke method call() for draw...
 
-  // stroke properties
-  //   ctx.strokeStyle = "black";
-  //   ctx.lineWidth = 5;
-  //   ctx.stroke();
+  hue += 0.5;
+  frameNumber++; // for each frame we also increase our number variable
+  // this will cause the particle that draws our effect to move around...
 };
 
 // by calling animate function
@@ -67,12 +112,19 @@ const drawCircle = () => {
 // which will just basically redraw canvas over and over creating an illusion of movement.
 
 const animate = () => {
-  //   drawCircle();
+  // clearAllPreviousFrames();
+
+  drawCircle();
+
+  // animation stopper...
+  if (frameNumber > 300) return; // return keyword will make function to stop on this line...
 
   // pass it as an argument the name of its parent function
   // so our animate function will just call itself over and over
   // to create an animation loop through a programming principle called recursion
   requestAnimationFrame(animate);
+  // this function is better because it will adjust to your screen refresh rate
+  // always try to use this function... it's a good practice for performance
 };
 
 animate();

@@ -2,6 +2,9 @@
 
 ### [Learning Resource](https://youtu.be/ymmtEgp0Tuc?si=PBXKYNFfZ5A1jDGn)
 
+- https://www.w3schools.com/jsref/api_canvas.asp
+- https://www.w3schools.com/jsref/canvas_globalcompositeoperation.asp
+
 ```
 we will learn how to draw shapes with javascript &
 we will use the basic knowledge in a powerful way to draw randomized fibonacci flowers.
