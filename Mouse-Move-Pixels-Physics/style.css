@@ -1,0 +1,41 @@
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+body {
+    user-select     : none;
+}
+
+#htmlCanvas {
+    position        : absolute;
+    top             : 0;
+    left            : 0;
+    width           : 100%;
+    height          : 100%;
+}
+
+img {
+    display: none;
+    /* but we can still access it by js */
+}
+
+#btn {
+    position        : absolute;
+    padding         : 10px 15px;
+    margin          : 10px;
+    background-color: #333;
+    color           : #AAA;
+    transition      : 0.2s;
+    font-family     : "Courier New", Courier, monospace;
+    cursor          : pointer;
+    font-size       : 28px;
+    font-weight     : 700;
+    border-radius   : 5px;
+}
+
+#btn:hover {
+    background-color: #AAA;
+    color           : #333;
+}
