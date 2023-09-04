@@ -26,17 +26,38 @@ window.addEventListener('load', () => {
             this.vx = 0; // velocity, x axis speed
             this.vy = 0; // velocity, y axis speed
             this.ease = 0.04; // animation speed...
+            this.dx = 0;
+            this.dy = 0;
+            this.force = 0;
+            this.angle = 0;
+            this.distance = 0;
+            this.friction = .95;
         }
 
-        draw(context) {
+        rectanglePixelDraw(context) {
             // draw black squares or small particles/pixels...
             context.fillStyle = this.pixelColor;
             context.fillRect(this.xAxis, this.yAxis, this.pixelSize, this.pixelSize); // x , y , width , height
         }
 
         update() {
-            this.xAxis += (this.originX - this.xAxis) * this.ease;
-            this.yAxis += (this.originY - this.yAxis) * this.ease;
+            // Physics calculation...
+            // to calculate a distance between two points we can use Pythagorean theorem...
+            // so this give us distance between two points of particle/pixel & mouse...
+            this.dx = this.effect.mouse.x - this.xAxis; // distance x
+            this.dy = this.effect.mouse.y - this.yAxis; // distance y
+            this.distance = this.dx * this.dx + this.dy * this.dy; // Math.sqrt expensive operation...
+            this.force = -this.effect.mouse.radius / this.distance;
+
+            // Physics calculation....
+            if (this.distance < this.effect.mouse.radius) {
+                this.angle = Math.atan2(this.dy, this.dx);
+                this.vx += this.force * Math.cos(this.angle);
+                this.vy += this.force * Math.sin(this.angle);
+            }
+
+            this.xAxis += (this.vx *= this.friction) + (this.originX - this.xAxis) * this.ease;
+            this.yAxis += (this.vy *= this.friction) + (this.originY - this.yAxis) * this.ease;
         }
 
         pixelEffect() {
@@ -61,6 +82,18 @@ window.addEventListener('load', () => {
             this.centerImgY = this.centerY - this.image.height * .5; // center image at Y position inside canvas
             this.particlesArray = []; // content all the active particlh5es objects
             this.pixelGap = 3;
+            this.mouse = {
+                radius: 3000, // how large the circle area...
+                x: undefined,
+                y: undefined,
+            };
+            // for tracking mouse cursor/pointer...
+            window.addEventListener('mousemove', (e) => {
+                this.mouse.x = e.x;
+                this.mouse.y = e.y;
+                // console.log(this.mouse);
+            });
+
         }
 
         init(context) {
@@ -97,8 +130,8 @@ window.addEventListener('load', () => {
             // traverse end:- here...
         }
 
-        draw(context) {
-            this.particlesArray.forEach(particle => particle.draw(context));
+        pixelDraw(context) {
+            this.particlesArray.forEach(particle => particle.rectanglePixelDraw(context));
         }
 
         update() {
@@ -120,7 +153,7 @@ window.addEventListener('load', () => {
     const animation = () => {
         ctx.clearRect(0, 0, cWidth, cHeight); // clear previous all frames from canvas
 
-        effect.draw(ctx)
+        effect.pixelDraw(ctx)
         effect.update()
 
         requestAnimationFrame(animation); // 60 frames per second...
@@ -131,4 +164,5 @@ window.addEventListener('load', () => {
     button.addEventListener('click', () => {
         effect.buttonClickPixelEffect();
     });
+
 });
