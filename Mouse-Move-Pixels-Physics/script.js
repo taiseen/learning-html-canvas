@@ -76,8 +76,8 @@ window.addEventListener('load', () => {
             this.image = document.getElementById('image'); // get img from DOM element
             this.canvasWidth = cWidth; // canvas width
             this.canvasHeight = cHeight; // canvas height
-            this.centerX = cWidth * .5;  // center X position inside canvas
-            this.centerY = cHeight * .5; // center Y position inside canvas 
+            this.centerX = this.canvasWidth * .5;  // center X position inside canvas
+            this.centerY = this.canvasHeight * .5; // center Y position inside canvas 
             this.centerImgX = this.centerX - this.image.width * .5; // center image at X position inside canvas
             this.centerImgY = this.centerY - this.image.height * .5; // center image at Y position inside canvas
             this.particlesArray = []; // content all the active particlh5es objects
@@ -141,6 +141,11 @@ window.addEventListener('load', () => {
         buttonClickPixelEffect() {
             this.particlesArray.forEach(particle => particle.pixelEffect());
         }
+
+        responsiveCanvas(width, height) {
+            this.canvasWidth = width; // canvas width
+            this.canvasHeight = height; // canvas height
+        }
     }
 
     // ###############################################################################################
@@ -161,8 +166,13 @@ window.addEventListener('load', () => {
 
     animation();
 
-    button.addEventListener('click', () => {
-        effect.buttonClickPixelEffect();
+    button.addEventListener('click', () => effect.buttonClickPixelEffect());
+
+    window.addEventListener('resize', e => {
+        const cWidth = canvas.width = window.innerWidth;
+        const cHeight = canvas.height = window.innerHeight;
+        effect.responsiveCanvas(cWidth, cHeight);
+        location.reload();
     });
 
 });
