@@ -6,8 +6,8 @@ class Shape {
         this.centerY = this.canvasHeight / 2; // Calculate the y-coordinate for the center of the canvas
         this.centerX = this.canvasWidth / 2; // Calculate the x-coordinate for the center of the canvas
 
-        this.movingSpeed = 50; // Reduced the speed for smoother animation
-        this.rectangle = 100;
+        this.movingSpeed = 30; // Reduced the speed for smoother animation
+        this.rectangle = 90;
         this.radius = 100;
         this.xAxis = 0;
         this.yAxis = 0;
@@ -61,6 +61,29 @@ class Shape {
         this.ctx.moveTo(0, this.centerY); // x , y --> Define the starting and ending points for the vertical line
         this.ctx.lineTo(this.canvasWidth, this.centerY);
         this.ctx.stroke();
+    }
+
+    drawGrid() {
+        // Set the line color and thickness
+        this.ctx.strokeStyle = 'black';
+        this.ctx.lineWidth = .5;
+
+        const space = 30;
+
+        const drawLine = (startX, startY, endX, endY) => {
+            this.ctx.beginPath();
+            this.ctx.moveTo(startX, startY);
+            this.ctx.lineTo(endX, endY);
+            this.ctx.stroke();
+        };
+
+        for (let row = 0; row < this.canvasHeight; row += space) {
+            drawLine(0, row, this.canvasWidth, row); // horizontal ➖➖➖ Line's...
+        }
+
+        for (let col = 0; col < this.canvasWidth; col += space) {
+            drawLine(col, 0, col, this.canvasHeight); // vertical ||| Line's...
+        }
     }
 
     shapeMoveByKey(KeyCode) {

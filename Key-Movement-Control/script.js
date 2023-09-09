@@ -24,10 +24,11 @@ const startAnimation = () => {
     shape.drawRectangle();
     // shape.drawCircle();
     // shape.drawText();
+    shape.drawGrid();
 
     
     // fixed shape...
-    const rSize = 100;
+    const rSize = 90;
     ctx.fillStyle = 'lightblue';
     ctx.fillRect(cWidth * .5 - rSize / 2, cHeight * .5 - rSize / 2, rSize, rSize);
 
