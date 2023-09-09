@@ -1,0 +1,33 @@
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+body {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    width           : 100vw;
+    height          : 100vh;
+    overflow        : hidden;
+    background-color: #BBB;
+    user-select     : none;
+}
+
+.container {
+    text-align : center;
+    font-family: 'Courier New';
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+#canvas {
+    width           : 800px;
+    height          : 600px;
+    border          : 1px dashed #555;
+    background-color: #DDD;
+    border-radius   : 15px;
+}
