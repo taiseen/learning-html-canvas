@@ -16,7 +16,7 @@ class Player {
     // for player [static] drawing inside canvas...
     draw(context) {
         context.fillStyle = 'black';
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.strokeRect(this.x, this.y, this.width, this.height);
 
         // draw static ==> shooting lesser...
         this.projectTiles.forEach(shoot => shoot.draw(context));
