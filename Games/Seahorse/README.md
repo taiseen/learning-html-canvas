@@ -32,3 +32,6 @@
         * perform update() operation...
         * delete those object conditionally form this [array of {object}]
 
+* Calculating deltaTime
+    * difference between current & previous loop time
+    * for run periodic event inside game...
