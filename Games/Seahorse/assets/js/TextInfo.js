@@ -1,5 +1,5 @@
 // draw score, timer & other visual representation information...
-class UI {
+class TextInfo {
     constructor(game) {
         this.game = game;
         this.color = 'orange';
@@ -9,6 +9,7 @@ class UI {
 
     draw(context) {
         context.save();
+
         context.shadowOffsetX = 2;
         context.shadowOffsetY = 2;
         context.shadowColor = 'black';
@@ -50,11 +51,11 @@ class UI {
             let message2;
 
             if (this.game.score > this.game.winningScore) {
-                message1 = 'You win';
+                message1 = 'You win 🥳';
                 message2 = 'Well done!';
             } else {
-                message1 = 'You lose';
-                message2 = 'Tru again next time';
+                message1 = 'You lose 😒';
+                message2 = 'Try again next time...';
             }
 
             context.font = '50px arial';
@@ -67,4 +68,4 @@ class UI {
     }
 }
 
-export default UI;
+export default TextInfo;

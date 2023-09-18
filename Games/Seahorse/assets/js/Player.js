@@ -1,4 +1,4 @@
-import ProjectTile from "./ProjectTile.js";
+import Bullet from "./Bullet.js";
 
 // Main Character
 class Player {
@@ -10,7 +10,7 @@ class Player {
         this.y = 10;
         this.speedY = 1;
         this.maxSpeed = 5;
-        this.projectTiles = [];
+        this.bullets = [];
     }
 
     // for player [static] drawing inside canvas...
@@ -19,7 +19,7 @@ class Player {
         context.strokeRect(this.x, this.y, this.width, this.height);
 
         // draw static ==> shooting lesser...
-        this.projectTiles.forEach(shoot => shoot.draw(context));
+        this.bullets.forEach(shoot => shoot.draw(context));
     }
 
     // for player [dynamically] moving inside canvas...
@@ -38,16 +38,18 @@ class Player {
         this.y += this.speedY; // by looping, this run always... very important line
 
         // handle dynamic ==> player shooting leaser...
-        this.projectTiles.forEach(shoot => shoot.update());
-        this.projectTiles = this.projectTiles.filter(shoot => !shoot.markForDeletion);
+        this.bullets.forEach(shoot => shoot.update());
+        this.bullets = this.bullets.filter(shoot => !shoot.markForDeletion);
 
     }
 
     // by user key press event, fire/call this method()...
     shootTop() {
         if (this.game.ammo > 0) {
-            this.projectTiles.push(new ProjectTile(this.game, this.x, this.y));
+            this.bullets.push(new Bullet(this.game, this.x, this.y));
             this.game.ammo--;
+
+            // this.game.audio.play();
         }
     }
 }

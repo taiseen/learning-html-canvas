@@ -1,6 +1,14 @@
 // falling balls, etc...
 class Particle {
-    constructor() {
+    constructor(game) {
+
+    }
+
+    draw() {
+
+    }
+
+    update() {
 
     }
 }

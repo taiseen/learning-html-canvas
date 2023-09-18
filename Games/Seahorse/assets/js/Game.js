@@ -1,7 +1,8 @@
 import InputHandler from "./InputHandler.js";
 import Angler1 from "./Enemy/Angler1.js";
+import Background from "./Background.js";
+import TextInfo from "./TextInfo.js";
 import Player from "./Player.js";
-import UI from "./UI.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -10,9 +11,12 @@ class Game {
         this.height = height;
 
         // objects call...
-        this.player = new Player(this);
         this.keyBoardInput = new InputHandler(this);
-        this.ui = new UI(this);
+        this.background = new Background(this);
+        this.textInfo = new TextInfo(this);
+        this.player = new Player(this);
+        this.audio = document.getElementById('audio1');
+        // this.audio.src = '../audio/shoot.wav';
 
         // tracking key press...
         this.keyPress = []; // always track user key press... & its available in all our code base...
@@ -21,8 +25,9 @@ class Game {
             down: 'ArrowDown',
             enter: 'Enter',
             space: ' ',
-            debugMode: 'd',
+            debug: 'd',
         }
+        this.debugMode = false;
 
         // for lesser bullet...
         this.ammo = 20;
@@ -35,24 +40,28 @@ class Game {
         this.enemyTimer = 0;
         this.enemyInterval = 1000; // 1s second...
 
+        // for score
         this.score = 0;
         this.winningScore = 10;
 
+        // for game time and speed
+        this.speed = 1;
         this.gameTime = 0;
-        this.timeLimit = 5000; // 5s 
-
+        this.timeLimit = 50000; // 5s
         this.gameOver = false;
     }
 
     // focus on ==> static...
     draw(context) {
+        this.background.draw(context);
         this.player.draw(context);
-        this.ui.draw(context);
+        this.textInfo.draw(context);
         this.enemies.forEach(enemy => enemy.draw(context));
     }
 
     // focus on ==> dynamic... 
     update(deltaTime) {
+        this.background.update();
         this.player.update();
 
         //===============================================================
@@ -85,7 +94,7 @@ class Game {
 
             if (this.isCollision(enemy, this.player)) enemy.markedForDeletion = true;
 
-            this.player.projectTiles.forEach(bullet => {
+            this.player.bullets.forEach(bullet => {
 
                 if (this.isCollision(bullet, enemy)) {
                     bullet.markedForDeletion = true;
@@ -111,21 +120,11 @@ class Game {
     }
 
     isCollision(obj1, obj2) {
-        const o1Left = obj1.x;
-        const o1Right = obj1.x + obj1.width;
-        const o1Top = obj1.y;
-        const o1Bottom = obj1.y + obj1.height;
-
-        const o2Left = obj2.x;
-        const o2Right = obj2.x + obj2.width;
-        const o2Top = obj2.y;
-        const o2Bottom = obj2.y + obj2.height;
-
         return (
-            o1Right > o2Left &&
-            o1Left < o2Right &&
-            o1Top < o2Bottom &&
-            o1Bottom > o2Top
+            obj1.x + obj1.width > obj2.x &&
+            obj1.x < obj2.width + obj2.x &&
+            obj1.y + obj1.height > obj2.y &&
+            obj1.y < obj2.height + obj2.y
         )
     }
 }

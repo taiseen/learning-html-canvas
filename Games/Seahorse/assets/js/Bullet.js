@@ -1,5 +1,5 @@
 // player will be shooting lesser... at enemies...
-class ProjectTile {
+class Bullet {
     constructor(game, x, y) {
         this.game = game;
         this.x = x; // depends on current player x position...
@@ -25,4 +25,4 @@ class ProjectTile {
     }
 }
 
-export default ProjectTile;
+export default Bullet;
