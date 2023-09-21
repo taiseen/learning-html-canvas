@@ -4,15 +4,22 @@
     box-sizing: border-box;
 }
 
+body {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    height         : 100vh;
+}
+
 #canvas {
-    position        : absolute;
-    top             : 50%;
-    left            : 50%;
-    max-width       : 100%;
-    max-height      : 100%;
-    border          : 5px solid black;
-    transform       : translate(-50%, -50%);
-    background-color: #4d79dc;
+    /* position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    transform : translate(-50%, -50%); */
+    max-width : 100%;
+    max-height: 100%;
+    border    : 3px solid black;
+    filter    : drop-shadow(10px 10px 5px gray);
 }
 
 #layer1,

@@ -36,7 +36,7 @@ class Game {
         this.ammoInterval = 500; // .5 second...
 
         // for enemy
-        this.enemies = []; // hold all enemies {objects}...
+        this.enemies = []; // create a holder to hold all enemies {objects}...
         this.enemyTimer = 0;
         this.enemyInterval = 1000; // 1s second...
 
@@ -83,8 +83,10 @@ class Game {
 
         // for enemy timing control...
         if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
-            this.addEnemy(); // call enemy to canvas...
             this.enemyTimer = 0;
+
+            // call enemy to canvas...
+            this.addEnemy(); // when game over, then this call stop...
         } else {
             this.enemyTimer += deltaTime;
         }
@@ -110,12 +112,14 @@ class Game {
             })
         });
 
+        // remove enemy from [enemies array]
         this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion); // remove old enemies...
 
         //===============================================================
     }
 
     addEnemy() {
+        // store enemy {object's} into enemies holder
         this.enemies.push(new Angler1(this));
     }
 
