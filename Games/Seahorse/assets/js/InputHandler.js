@@ -19,6 +19,8 @@ class InputHandler {
                 e.key === this.game.key.enter
             ) {
                 this.game.player.shootTop();
+            } else if (e.key === this.game.key.debug) {
+                this.game.debugMode = !this.game.debugMode
             }
         });
 

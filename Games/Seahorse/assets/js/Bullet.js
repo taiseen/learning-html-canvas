@@ -8,12 +8,13 @@ class Bullet {
         this.height = 3;
         this.speed = 3;
         this.markForDeletion = false; // flag for delete this obj from game...
+        this.bullet = document.getElementById('bullet');
     }
 
     // focus on ==> static...
     draw(context) {
         context.fillStyle = 'orange';
-        context.fillRect(this.x + 80, this.y + 30, this.width, this.height);
+        context.drawImage(this.bullet, this.x + 80, this.y + 30, this.width, this.height);
     }
 
     // focus on ==> dynamic... 

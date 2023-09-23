@@ -54,3 +54,7 @@
 * Enemy movement:
     * start moving `right to left` side | reverse in `x` direction
     * top to bottom, but `within 90%` of game screen `hight` | `y` direction
+
+* Draw Player & Bullet image 
+    * `frameX *` single player `width`
+    * `frameY *` single player `height`
