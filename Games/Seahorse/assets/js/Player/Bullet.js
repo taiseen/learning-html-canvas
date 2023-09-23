@@ -4,8 +4,8 @@ class Bullet {
         this.game = game;
         this.x = x; // depends on current player x position...
         this.y = y; // depends on current player y position...
-        this.width = 10;
-        this.height = 3;
+        this.width = 14;
+        this.height = 7;
         this.speed = 3;
         this.markForDeletion = false; // flag for delete this obj from game...
         this.bullet = document.getElementById('bullet');

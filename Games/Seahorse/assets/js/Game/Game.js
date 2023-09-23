@@ -1,8 +1,8 @@
-import InputHandler from "./InputHandler.js";
-import Angler1 from "./Enemy/Angler1.js";
-import Background from "./Background.js";
+import Background from "../Background/Background.js";
+import InputHandler from "../Input/InputHandler.js";
 import TextInfo from "./TextInfo.js";
-import Player from "./Player.js";
+import Angler1 from "../Enemy/Angler1.js";
+import Player from "../Player/Player.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -10,11 +10,12 @@ class Game {
         this.width = width;
         this.height = height;
 
-        // objects call...
+        // object's creation...
         this.keyBoardInput = new InputHandler(this);
         this.background = new Background(this);
         this.textInfo = new TextInfo(this);
         this.player = new Player(this);
+
         this.audio = document.getElementById('audio1');
         // this.audio.src = '../audio/shoot.wav';
 

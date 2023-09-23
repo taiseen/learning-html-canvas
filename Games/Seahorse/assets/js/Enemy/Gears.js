@@ -1,5 +1,5 @@
 // falling balls, etc...
-class Particle {
+class Gears {
     constructor(game) {
 
     }
@@ -13,4 +13,4 @@ class Particle {
     }
 }
 
-export default Particle;
+export default Gears;

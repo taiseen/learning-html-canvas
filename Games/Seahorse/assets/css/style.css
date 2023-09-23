@@ -22,10 +22,17 @@ body {
     filter    : drop-shadow(10px 10px 5px gray);
 }
 
+/* hide all image's that use at this game */
 #layer1,
 #layer2,
 #layer3,
 #layer4,
-#player {
+#player,
+#hivewhale,
+#angler1,
+#angler2,
+#drone,
+#lucky,
+#gears {
     display: none;
 }

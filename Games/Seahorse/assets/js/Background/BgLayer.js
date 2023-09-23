@@ -17,6 +17,7 @@ class BgLayer {
 
     update() {
         if (this.x <= -this.width) this.x = 0;
+
         this.x -= this.game.speed * this.speedModifier;
     }
 }

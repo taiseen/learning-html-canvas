@@ -7,21 +7,42 @@ class Enemy {
         this.markedForDeletion = false;
         this.lives = 5;
         this.score = this.lives;
+
+        this.enemyFrameX = 0;
+        this.enemyFrameY = 0;
+        this.enemyMaxFrame = 37;
     }
 
     draw(context) {
-        context.fillStyle = 'red';
-        context.strokeRect(this.x, this.y, this.width, this.height);
+        if (this.game.debugMode) {
+            context.font = '20px Arial';
+            context.fillText(this.lives, this.x, this.y);
+            context.strokeRect(this.x, this.y, this.width, this.height);
+        }
 
-        context.fillStyle = 'black';
-        context.font = '20px Arial';
-        context.fillText(this.lives, this.x, this.y);
-
+        context.drawImage(
+            this.img,
+            this.enemyFrameX * this.width,
+            this.enemyFrameY * this.height,
+            this.width,
+            this.height,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
     }
 
     update() {
         this.x += this.speedX; // direction update continually
+
         if (this.x + this.width < 0) this.markedForDeletion = true;
+
+        // update enemy image positions... like animation
+        this.enemyFrameX < this.enemyMaxFrame
+            ? this.enemyFrameX++
+            : this.enemyFrameX = 0
+
     }
 }
 
