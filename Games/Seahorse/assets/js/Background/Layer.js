@@ -1,5 +1,5 @@
 // Handle individual background layer - parallax effect 
-class BgLayer {
+class Layer {
     constructor(game, image, speedModifier) {
         this.game = game;
         this.image = image;
@@ -22,4 +22,4 @@ class BgLayer {
     }
 }
 
-export default BgLayer;
+export default Layer;

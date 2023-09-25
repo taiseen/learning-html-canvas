@@ -14,7 +14,7 @@ class Bullet {
     // focus on ==> static...
     draw(context) {
         context.fillStyle = 'orange';
-        context.drawImage(this.bullet, this.x + 80, this.y + 30, this.width, this.height);
+        context.drawImage(this.bullet, this.x, this.y, this.width, this.height);
     }
 
     // focus on ==> dynamic... 

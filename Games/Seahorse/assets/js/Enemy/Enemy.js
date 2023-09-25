@@ -5,8 +5,6 @@ class Enemy {
         this.x = this.game.width;
         this.speedX = Math.random() * -1.5 - .5;
         this.markedForDeletion = false;
-        this.lives = 5;
-        this.score = this.lives;
 
         this.enemyFrameX = 0;
         this.enemyFrameY = 0;
@@ -34,7 +32,7 @@ class Enemy {
     }
 
     update() {
-        this.x += this.speedX; // direction update continually
+        this.x += this.speedX - this.game.speed; // direction update continually
 
         if (this.x + this.width < 0) this.markedForDeletion = true;
 

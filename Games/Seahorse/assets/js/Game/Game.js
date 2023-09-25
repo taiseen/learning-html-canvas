@@ -1,8 +1,10 @@
 import Background from "../Background/Background.js";
 import InputHandler from "../Input/InputHandler.js";
-import TextInfo from "./TextInfo.js";
 import Angler1 from "../Enemy/Angler1.js";
+import Angler2 from "../Enemy/Angler2.js";
 import Player from "../Player/Player.js";
+import TextInfo from "./TextInfo.js";
+import Lucky from "../Enemy/Lucky.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -48,7 +50,7 @@ class Game {
         // for game time and speed
         this.speed = 1;
         this.gameTime = 0;
-        this.timeLimit = 50000; // 5s
+        this.timeLimit = 150000; // 5s
         this.gameOver = false;
     }
 
@@ -63,7 +65,7 @@ class Game {
     // focus on ==> dynamic... 
     update(deltaTime) {
         this.background.update();
-        this.player.update();
+        this.player.update(deltaTime);
 
         //===============================================================
 
@@ -95,8 +97,18 @@ class Game {
         this.enemies.forEach(enemy => {
             enemy.update(); // position update for enemies...
 
-            if (this.isCollision(enemy, this.player)) enemy.markedForDeletion = true;
+            if (this.isCollision(enemy, this.player)) {
+                enemy.markedForDeletion = true;
+                if (enemy.type === 'lucky') {
+                    this.player.enterPowerUp();
+                }
+                else {
+                    this.score--;
+                }
+            }
 
+
+            // traverse inside bullet holder for collision checking...
             this.player.bullets.forEach(bullet => {
 
                 if (this.isCollision(bullet, enemy)) {
@@ -120,8 +132,12 @@ class Game {
     }
 
     addEnemy() {
-        // store enemy {object's} into enemies holder
-        this.enemies.push(new Angler1(this));
+        // store enemy {object's} into enemies [holder]
+        const random = Math.random();
+
+        if (random < .3) this.enemies.push(new Angler1(this));
+        else if (random < .6) this.enemies.push(new Angler2(this));
+        else this.enemies.push(new Lucky(this));
     }
 
     isCollision(obj1, obj2) {

@@ -18,6 +18,10 @@ class Player {
 
         this.bullets = []; // create a holder to hold all bullets {objects}...
 
+        this.powerUp = false;
+        this.powerUpTimer = 0;
+        this.powerUpLimit = 10000; // 10s
+
     }
 
     // for player [static] drawing inside canvas...
@@ -26,6 +30,9 @@ class Player {
             context.strokeStyle = 'red';
             context.strokeRect(this.x, this.y, this.width, this.height);
         }
+
+        // draw static ==> bullet / shooting lesser...
+        this.bullets.forEach(bullet => bullet.draw(context));
 
         context.drawImage(
             this.playerImg,
@@ -38,13 +45,22 @@ class Player {
             this.width,
             this.height
         );
-
-        // draw static ==> shooting lesser...
-        this.bullets.forEach(shoot => shoot.draw(context));
     }
 
     // for player [dynamically] moving inside canvas... || manipulating/change property values...
-    update() {
+    update(deltaTime) {
+
+        // player moving ==>  vertical boundary 
+        // player moving ==> top boundary limit
+        if (this.y < -this.height * .5) {
+            this.y = -this.height * .5
+        }
+
+        // player moving ==> bottom boundary limit
+        if (this.y > this.game.height - this.height * .5) {
+            this.y = this.game.height - this.height * .5
+        }
+
         // direction change... by pressing key from keyBoard...
         if (this.game.keyPress.includes(this.game.key.up)) this.speedY = -this.maxSpeed;
         else if (this.game.keyPress.includes(this.game.key.down)) this.speedY = this.maxSpeed;
@@ -62,21 +78,49 @@ class Player {
         this.bullets.forEach(shoot => shoot.update());
         this.bullets = this.bullets.filter(shoot => !shoot.markForDeletion); // update bullets holder, by removing bullets...
 
-        // player image frameX movement...
+        // player image frameX movement/animation...
         this.playerFrameX < this.playerMaxFrame
             ? this.playerFrameX++
             : this.playerFrameX = 0;
 
+        if (this.powerUp) {
+            // player power up animation...
+            if (this.powerUpTimer > this.powerUpLimit) {
+                this.powerUpTimer = 0;
+                this.powerUp = false;
+                this.playerFrameY = 0;
+            }
+            else {
+                this.powerUpTimer += deltaTime;
+                this.playerFrameY = 1;
+                this.game.ammo += .1
+            }
+        }
     }
 
     // by user key press event, fire/call this method()...
     shootTop() {
+        const topArea = 30;
         if (this.game.ammo > 0) {
-            this.bullets.push(new Bullet(this.game, this.x, this.y)); // store bullet {object's} into bullets holder
+            this.bullets.push(new Bullet(this.game, this.x + 80, this.y + topArea)); // store bullet {object's} into bullets holder
             this.game.ammo--;
-
             // this.game.audio.play();
         }
+
+        if (this.powerUp) this.shootBottom();
+    }
+
+    shootBottom() {
+        const bottomArea = 175;
+        if (this.game.ammo > 0) {
+            this.bullets.push(new Bullet(this.game, this.x + 80, this.y + bottomArea)); // store bullet {object's} into bullets holder
+        }
+    }
+
+    enterPowerUp() {
+        this.powerUp = true;
+        this.powerUpTimer = 0;
+        this.game.ammo += this.game.maxAmmo;
     }
 }
 
