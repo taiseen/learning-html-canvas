@@ -1,4 +1,5 @@
-// player will be shooting lesser... at enemies...
+// player will be shooting lesser / bullets... at enemies...
+
 class Bullet {
     constructor(game, x, y) {
         this.game = game;

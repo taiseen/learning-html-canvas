@@ -15,7 +15,7 @@ class Background {
         this.layer3 = new Layer(this.game, this.img3, .8);    // bg layer speed ==> .8
         this.layer4 = new Layer(this.game, this.img4, 1);     // bg layer speed ==> 1
 
-        this.layers = [this.layer1, this.layer2, this.layer3, this.layer4]; // layer's [holder]...
+        this.layers = [this.layer1, this.layer2, this.layer3]; // layer's [holder]...
     }
 
     draw(context) {

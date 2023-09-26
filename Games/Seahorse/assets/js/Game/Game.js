@@ -60,16 +60,19 @@ class Game {
 
     // focus on ==> static...
     draw(context) {
+        // this order is important...
         this.background.draw(context);
-        this.player.draw(context);
         this.textInfo.draw(context);
+        this.player.draw(context);
         this.enemies.forEach(enemy => enemy.draw(context));
         this.gears.forEach(gear => gear.draw(context));
+        this.background.layer4.draw(context);
     }
 
     // focus on ==> dynamic... 
     update(deltaTime) {
         this.background.update();
+        this.background.layer4.update();
         this.player.update(deltaTime);
 
         //===============================================================
@@ -193,7 +196,6 @@ class Game {
         }
 
     }
-
 
 }
 

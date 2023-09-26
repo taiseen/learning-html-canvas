@@ -1,4 +1,5 @@
-// falling balls, etc...
+// falling destroyed gear partials with gravity + physic...
+
 class Gears {
     constructor(game, x, y) {
         this.game = game;
@@ -21,28 +22,33 @@ class Gears {
         this.markedForDeletion = false;
 
         this.bounced = 0;
-        this.bottomBoundaryBounce = Math.random() * 100 + 60;
+        this.bottomBoundaryBounce = Math.random() * 80 + 60;
     }
 
     draw(context) {
+        context.save();
+        context.translate(this.x, this.y);
+        context.rotate(this.angle);
+
         context.drawImage(
             this.img,
             this.gearFrameX * this.spriteSize,
             this.gearFrameY * this.spriteSize,
             this.spriteSize,
             this.spriteSize,
-            this.x,
-            this.y,
+            this.size * -.5,
+            this.size * -.5,
             this.size,
             this.size
         );
 
+        context.restore();
     }
 
     update() {
         this.angle += this.va;
         this.speedY += this.gravity;
-        this.x -= this.speedX;
+        this.x -= this.speedX + this.game.speed;
         this.y += this.speedY;
 
         if (

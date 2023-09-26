@@ -1,8 +1,7 @@
 > 17 - Sep - 2023
 
 # SeaHorse 
-### Html canvas base 2D game... 
-
+### Html canvas base 2D game... [Live Link](https://seahorse-2d.netlify.app)
 
 ## Learning context:-
 * Project structure

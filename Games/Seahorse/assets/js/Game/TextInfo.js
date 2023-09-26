@@ -75,7 +75,7 @@ class TextInfo {
 
         this.game.ammo > 0
             ? context.fillText(this.game.ammo.toFixed(0), numberLastPosition + 15, 61)
-            : context.fillText(this.game.ammo, this.leftMargin, 61);
+            : context.fillText(0, this.leftMargin + 1, 61); 
     }
 }
 

@@ -1,3 +1,5 @@
+// 17 - Sep - 2023
+
 import Game from "./Game/Game.js";
 
 class Canvas {
@@ -16,6 +18,10 @@ class Canvas {
 
         // Start the animation loop
         this.animation(0); // for timeStamp pass 0 as args...
+
+        // form browser access - source code security...
+        document, addEventListener('contextmenu', this.handelRightClick);
+        document, addEventListener('keydown', this.handelKeyPress);
     }
 
     // animation = () => {  <== without .bind(this) /// arrow method also work 
@@ -35,6 +41,14 @@ class Canvas {
         this.game.update(deltaTime); // for run periodic event in game...
 
         requestAnimationFrame(this.animation);
+    }
+
+    handelRightClick = (e) => e.preventDefault();   // prevent mouse right click || context menu click..
+    handelKeyPress = (e) => {                       // prevent key board shortcut...
+        if (e.ctrlKey || e.keyCode === 123) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
     }
 }
 

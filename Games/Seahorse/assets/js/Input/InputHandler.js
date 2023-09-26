@@ -1,4 +1,5 @@
-// track key board input by user...
+// track key board input from user... for shoot ammo...
+
 class InputHandler {
     constructor(game) {
         this.game = game;
@@ -18,7 +19,7 @@ class InputHandler {
                 e.key === this.game.key.space ||
                 e.key === this.game.key.enter
             ) {
-                this.game.player.shootTop();
+                this.game.player.shootTop(); // shoot ammo... 
             } else if (e.key === this.game.key.debug) {
                 this.game.debugMode = !this.game.debugMode
             }

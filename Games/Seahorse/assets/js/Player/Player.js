@@ -1,6 +1,6 @@
 import Bullet from "./Bullet.js";
 
-// Main Character
+// Main Character || SeaHorse...
 class Player {
     constructor(game) {
         this.game = game;
@@ -120,7 +120,9 @@ class Player {
     enterPowerUp() {
         this.powerUp = true;
         this.powerUpTimer = 0;
-        this.game.ammo = this.game.maxAmmo;
+        if (this.game.ammo < this.game.maxAmmo) {
+            this.game.ammo = this.game.maxAmmo
+        }
     }
 }
 
