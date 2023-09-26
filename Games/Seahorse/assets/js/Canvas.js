@@ -7,7 +7,7 @@ class Canvas {
         this.canvas = document.getElementById('canvas');
         this.context = this.canvas.getContext('2d');
 
-        this.canvas.width = 1100;
+        this.canvas.width = 1400;
         this.canvas.height = 500;
         this.game = new Game(this.canvas.width, this.canvas.height);
 
@@ -19,9 +19,7 @@ class Canvas {
         // Start the animation loop
         this.animation(0); // for timeStamp pass 0 as args...
 
-        // form browser access - source code security...
-        document, addEventListener('contextmenu', this.handelRightClick);
-        document, addEventListener('keydown', this.handelKeyPress);
+        this.mouseAndKeySecurity();
     }
 
     // animation = () => {  <== without .bind(this) /// arrow method also work 
@@ -43,13 +41,21 @@ class Canvas {
         requestAnimationFrame(this.animation);
     }
 
-    handelRightClick = (e) => e.preventDefault();   // prevent mouse right click || context menu click..
-    handelKeyPress = (e) => {                       // prevent key board shortcut...
-        if (e.ctrlKey || e.keyCode === 123) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
+    mouseAndKeySecurity() {
+        const handleRightClick = (e) => e.preventDefault(); // prevent mouse right-click || context menu click.
+        
+        const handleKeyPress = (event) => { // prevent keyboard shortcuts.
+            if (event.ctrlKey || event.keyCode === 123) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        };
+
+        // Prevent right-click and keyboard shortcuts
+        document.addEventListener('contextmenu', handleRightClick);
+        document.addEventListener('keydown', handleKeyPress);
     }
+
 }
 
 window.addEventListener('load', () => new Canvas());
