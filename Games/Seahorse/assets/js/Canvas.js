@@ -4,6 +4,9 @@ import Game from "./Game/Game.js";
 
 class Canvas {
     constructor() {
+        this.loading = document.getElementById('loading');
+        this.loading.style.display = 'none';
+        
         this.canvas = document.getElementById('canvas');
         this.context = this.canvas.getContext('2d');
 
@@ -44,10 +47,12 @@ class Canvas {
     mouseAndKeySecurity() {
         const handleRightClick = (e) => e.preventDefault(); // prevent mouse right-click || context menu click.
         
-        const handleKeyPress = (event) => { // prevent keyboard shortcuts.
-            if (event.ctrlKey || event.keyCode === 123) {
-                event.stopPropagation();
-                event.preventDefault();
+        const handleKeyPress = (event) => {
+            if (event.ctrlKey) {
+                if (event.keyCode !== 82) { // Block all Ctrl key presses except Ctrl+R (keyCode 82)
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
             }
         };
 

@@ -2,6 +2,7 @@
     padding   : 0;
     margin    : 0;
     box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {
@@ -20,6 +21,11 @@ body {
     max-height: 100%;
     border    : 3px solid black;
     filter    : drop-shadow(10px 10px 5px gray);
+}
+
+#loading {
+    font-size: 2.2rem;
+    position: fixed;
 }
 
 /* hide all image's that use at this game */
