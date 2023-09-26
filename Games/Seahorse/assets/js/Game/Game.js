@@ -3,8 +3,9 @@ import InputHandler from "../Input/InputHandler.js";
 import Angler1 from "../Enemy/Angler1.js";
 import Angler2 from "../Enemy/Angler2.js";
 import Player from "../Player/Player.js";
-import TextInfo from "./TextInfo.js";
 import Lucky from "../Enemy/Lucky.js";
+import Gears from "../Enemy/Gears.js";
+import TextInfo from "./TextInfo.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -43,6 +44,9 @@ class Game {
         this.enemyTimer = 0;
         this.enemyInterval = 1000; // 1s second...
 
+        // for gears...
+        this.gears = [] // create a holder to hold all gears {objects}...
+
         // for score
         this.score = 0;
         this.winningScore = 10;
@@ -60,6 +64,7 @@ class Game {
         this.player.draw(context);
         this.textInfo.draw(context);
         this.enemies.forEach(enemy => enemy.draw(context));
+        this.gears.forEach(gear => gear.draw(context));
     }
 
     // focus on ==> dynamic... 
@@ -97,36 +102,19 @@ class Game {
         this.enemies.forEach(enemy => {
             enemy.update(); // position update for enemies...
 
-            if (this.isCollision(enemy, this.player)) {
-                enemy.markedForDeletion = true;
-                if (enemy.type === 'lucky') {
-                    this.player.enterPowerUp();
-                }
-                else {
-                    this.score--;
-                }
-            }
+            this.hitByPlayer(enemy);
 
-
-            // traverse inside bullet holder for collision checking...
-            this.player.bullets.forEach(bullet => {
-
-                if (this.isCollision(bullet, enemy)) {
-                    bullet.markedForDeletion = true;
-
-                    enemy.lives--;
-                    if (enemy.lives <= 0) {
-                        enemy.markedForDeletion = true;
-
-                        if (!this.gameOver) this.score += enemy.score;
-                        if (this.score > this.winningScore) this.gameOver = true;
-                    }
-                }
-            })
+            this.hitByBullet(enemy);
         });
 
         // remove enemy from [enemies array]
         this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion); // remove old enemies...
+
+        //===============================================================
+
+        // gears operation...
+        this.gears.forEach(gear => gear.update());
+        this.gears = this.gears.filter(gear => !gear.markedForDeletion);
 
         //===============================================================
     }
@@ -148,6 +136,65 @@ class Game {
             obj1.y < obj2.height + obj2.y
         )
     }
+
+    hitByPlayer(enemy) {
+        // when enemy hit by player...
+        if (this.isCollision(enemy, this.player)) {
+            enemy.markedForDeletion = true;
+
+            this.gearAnimatedFromEnemy(enemy, true);
+
+            enemy.type === 'lucky'
+                ? this.player.enterPowerUp()
+                : this.score--;
+        }
+    }
+
+    hitByBullet(enemy) {
+        // traverse inside bullet holder for collision checking...
+        // when enemy hit by bullet/leaser...
+        this.player.bullets.forEach(bullet => {
+
+            if (this.isCollision(bullet, enemy)) {
+                bullet.markedForDeletion = true;
+                enemy.lives--;
+
+                this.gearAnimatedFromEnemy(enemy, false);
+
+                if (enemy.lives <= 0) {
+                    enemy.markedForDeletion = true;
+
+                    this.gearAnimatedFromEnemy(enemy, true);
+
+                    if (!this.gameOver) this.score += enemy.score;
+                    if (this.score > this.winningScore) this.gameOver = true;
+                }
+            }
+        })
+    }
+
+    gearAnimatedFromEnemy(enemy, isMultiple) {
+
+        if (isMultiple) {
+            // get 10 gear's part to animated...
+            for (let i = 0; i < 10; i++) {
+                this.gears.push(new Gears(
+                    this,
+                    enemy.x + enemy.width * .5,
+                    enemy.y + enemy.height * .5
+                ));
+            }
+        } else {
+            // get 1 gear part to animated...
+            this.gears.push(new Gears(this,
+                enemy.x + enemy.width * .5,
+                enemy.y + enemy.height * .5
+            ));
+        }
+
+    }
+
+
 }
 
 export default Game;

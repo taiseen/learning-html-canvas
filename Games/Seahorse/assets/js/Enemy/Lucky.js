@@ -5,6 +5,7 @@ class Lucky extends Enemy {
         super(game); // at 1st, merge parent properties also...
         this.width = 99; // img single unit 
         this.height = 95; // img single unit 
+
         this.y = Math.random() * (this.game.height * .9 - this.height); // random height with 90% game height
 
         this.lives = 3;
@@ -12,7 +13,7 @@ class Lucky extends Enemy {
         this.type = 'lucky';
 
         this.img = document.getElementById('lucky');
-        this.frameY = Math.floor(Math.random() * 2);
+        this.enemyFrameY = Math.floor(Math.random() * 2);
     }
 }
 

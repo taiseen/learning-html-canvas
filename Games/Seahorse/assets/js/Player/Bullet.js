@@ -7,7 +7,7 @@ class Bullet {
         this.width = 14;
         this.height = 7;
         this.speed = 3;
-        this.markForDeletion = false; // flag for delete this obj from game...
+        this.markedForDeletion = false; // flag for delete this obj from game...
         this.bullet = document.getElementById('bullet');
     }
 
@@ -22,7 +22,7 @@ class Bullet {
         this.x += this.speed; // increase horizontal x coordinate for movement... 
 
         // if move across the 80% game/canvas area, then delete it...
-        if (this.x > this.game.width * .8) this.markForDeletion = true;
+        if (this.x > this.game.width * .8) this.markedForDeletion = true;
     }
 }
 

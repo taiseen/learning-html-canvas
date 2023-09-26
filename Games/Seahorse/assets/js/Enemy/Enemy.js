@@ -3,11 +3,13 @@ class Enemy {
     constructor(game) {
         this.game = game;
         this.x = this.game.width;
+        this.y = Math.random() * (this.game.height * .9 - this.height); // random height with 90% game height
+
         this.speedX = Math.random() * -1.5 - .5;
         this.markedForDeletion = false;
 
         this.enemyFrameX = 0;
-        this.enemyFrameY = 0;
+        // this.enemyFrameY = 0;
         this.enemyMaxFrame = 37;
     }
 
@@ -40,7 +42,6 @@ class Enemy {
         this.enemyFrameX < this.enemyMaxFrame
             ? this.enemyFrameX++
             : this.enemyFrameX = 0
-
     }
 }
 

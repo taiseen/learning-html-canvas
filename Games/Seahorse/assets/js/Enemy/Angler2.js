@@ -5,6 +5,7 @@ class Angler2 extends Enemy {
         super(game); // at 1st, merge parent properties also...
         this.width = 213; // img single unit 
         this.height = 165; // img single unit 
+        
         this.y = Math.random() * (this.game.height * .9 - this.height); // random height with 90% game height
         
         this.lives = 3;

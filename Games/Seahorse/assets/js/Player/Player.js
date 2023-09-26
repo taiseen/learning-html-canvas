@@ -76,7 +76,7 @@ class Player {
 
         // handle dynamic ==> player shooting leaser...
         this.bullets.forEach(shoot => shoot.update());
-        this.bullets = this.bullets.filter(shoot => !shoot.markForDeletion); // update bullets holder, by removing bullets...
+        this.bullets = this.bullets.filter(shoot => !shoot.markedForDeletion); // update bullets holder, by removing bullets...
 
         // player image frameX movement/animation...
         this.playerFrameX < this.playerMaxFrame
@@ -120,7 +120,7 @@ class Player {
     enterPowerUp() {
         this.powerUp = true;
         this.powerUpTimer = 0;
-        this.game.ammo += this.game.maxAmmo;
+        this.game.ammo = this.game.maxAmmo;
     }
 }
 
