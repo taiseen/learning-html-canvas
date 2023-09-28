@@ -6,7 +6,7 @@ class Angler1 extends Enemy {
         this.width = 228; // img single unit 
         this.height = 169; // img single unit 
         
-        this.y = Math.random() * (this.game.height * .9 - this.height); // random height with 90% game height
+        this.y = Math.random() * (this.game.height * .95 - this.height); // random height with 95% game height
         
         this.lives = 2;
         this.score = this.lives;

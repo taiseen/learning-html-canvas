@@ -1,5 +1,6 @@
 import Background from "../Background/Background.js";
 import InputHandler from "../Input/InputHandler.js";
+import HiveWhale from "../Enemy/HiveWhale.js";
 import Angler1 from "../Enemy/Angler1.js";
 import Angler2 from "../Enemy/Angler2.js";
 import Player from "../Player/Player.js";
@@ -128,6 +129,7 @@ class Game {
 
         if (random < .3) this.enemies.push(new Angler1(this));
         else if (random < .6) this.enemies.push(new Angler2(this));
+        else if (random < .8) this.enemies.push(new HiveWhale(this));
         else this.enemies.push(new Lucky(this));
     }
 

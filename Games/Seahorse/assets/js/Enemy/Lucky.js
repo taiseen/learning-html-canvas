@@ -6,14 +6,14 @@ class Lucky extends Enemy {
         this.width = 99; // img single unit 
         this.height = 95; // img single unit 
 
-        this.y = Math.random() * (this.game.height * .9 - this.height); // random height with 90% game height
+        this.y = Math.random() * (this.game.height * .95 - this.height); // random height with 95% game height
+
+        this.img = document.getElementById('lucky');
+        this.enemyFrameY = Math.floor(Math.random() * 2);
 
         this.lives = 3;
         this.score = 15; // score point
         this.type = 'lucky';
-
-        this.img = document.getElementById('lucky');
-        this.enemyFrameY = Math.floor(Math.random() * 2);
     }
 }
 
