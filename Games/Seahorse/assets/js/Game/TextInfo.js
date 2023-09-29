@@ -68,14 +68,14 @@ class TextInfo {
         if (this.game.player.powerUp) context.fillStyle = 'tomato';
 
         let numberLastPosition = 0;
-        for (let i = 0; i < this.game.ammo; i++) {
+        for (let i = 1; i <= this.game.ammo; i++) {
             numberLastPosition = this.leftMargin + 5 * i;
             context.fillRect(numberLastPosition, 50, 3, 20);
         }
 
         this.game.ammo > 0
             ? context.fillText(this.game.ammo.toFixed(0), numberLastPosition + 15, 61)
-            : context.fillText(0, this.leftMargin + 1, 61); 
+            : context.fillText(0, this.leftMargin + 1, 61);
     }
 }
 

@@ -7,6 +7,7 @@ import Player from "../Player/Player.js";
 import Lucky from "../Enemy/Lucky.js";
 import Gears from "../Enemy/Gears.js";
 import TextInfo from "./TextInfo.js";
+import Drone from "../Enemy/Drone.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -147,7 +148,7 @@ class Game {
         if (this.isCollision(enemy, this.player)) {
             enemy.markedForDeletion = true;
 
-            this.gearAnimatedFromEnemy(enemy, true);
+            this.gearAnimatedFromEnemy(enemy, true); // multiple gear animation
 
             enemy.type === 'lucky'
                 ? this.player.enterPowerUp()
@@ -164,12 +165,24 @@ class Game {
                 bullet.markedForDeletion = true;
                 enemy.lives--;
 
-                this.gearAnimatedFromEnemy(enemy, false);
+                this.gearAnimatedFromEnemy(enemy, false); // single gear animation
 
                 if (enemy.lives <= 0) {
+                    this.gearAnimatedFromEnemy(enemy, true); // multiple gear animation
+
                     enemy.markedForDeletion = true;
 
-                    this.gearAnimatedFromEnemy(enemy, true);
+                    if (enemy.type === 'hiveWhale') {
+                        // after destroying big enemy 
+                        // at that location add new 5 drone enemy
+                        for (let i = 0; i < 5; i++) {
+                            this.enemies.push(new Drone(
+                                this,
+                                enemy.x + Math.random() * enemy.width,
+                                enemy.y + Math.random() * enemy.height * .5
+                            ));
+                        }
+                    }
 
                     if (!this.gameOver) this.score += enemy.score;
                     if (this.score > this.winningScore) this.gameOver = true;
@@ -182,7 +195,7 @@ class Game {
 
         if (isMultiple) {
             // get 10 gear's part to animated...
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < enemy.score; i++) {
                 this.gears.push(new Gears(
                     this,
                     enemy.x + enemy.width * .5,
