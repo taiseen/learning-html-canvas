@@ -71,3 +71,4 @@
         * but for `extends` childe `can access`/invoke this methods... 
 
 * By destroying an object share its x,y position to another object
+    * inside that position randomly generate drone object
