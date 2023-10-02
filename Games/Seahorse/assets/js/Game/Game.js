@@ -4,10 +4,10 @@ import HiveWhale from "../Enemy/HiveWhale.js";
 import Angler1 from "../Enemy/Angler1.js";
 import Angler2 from "../Enemy/Angler2.js";
 import Player from "../Player/Player.js";
+import Gears from "../Effects/Gears.js";
 import Lucky from "../Enemy/Lucky.js";
-import Gears from "../Enemy/Gears.js";
-import TextInfo from "./TextInfo.js";
 import Drone from "../Enemy/Drone.js";
+import TextInfo from "./TextInfo.js";
 
 // All logic come together... || Brain of this project...
 class Game {
