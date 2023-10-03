@@ -1,0 +1,48 @@
+* {
+    padding    : 0;
+    margin     : 0;
+    box-sizing : border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    height         : 100vh;
+}
+
+#canvas {
+    /* position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    transform : translate(-50%, -50%); */
+    max-width : 100%;
+    max-height: 100%;
+    border    : 3px solid black;
+    filter    : drop-shadow(10px 10px 5px gray);
+}
+
+#loading {
+    font-size: 2.2rem;
+    position : fixed;
+}
+
+/* hide all image's that use at this game */
+#shoot,
+#layer1,
+#layer2,
+#layer3,
+#layer4,
+#player,
+#bullet,
+#hiveWhale,
+#angler1,
+#angler2,
+#drone,
+#lucky,
+#gears,
+#smokeExplosion,
+#fireExplosion {
+    display: none;
+}

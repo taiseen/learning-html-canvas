@@ -1,3 +1,4 @@
+import SmokeExplosion from "../Effects/SmokeExplosion.js";
 import Background from "../Background/Background.js";
 import InputHandler from "../Input/InputHandler.js";
 import HiveWhale from "../Enemy/HiveWhale.js";
@@ -21,8 +22,8 @@ class Game {
         this.textInfo = new TextInfo(this);
         this.player = new Player(this);
 
-        this.audio = document.getElementById('audio1');
-        // this.audio.src = '../audio/shoot.wav';
+        this.audio = document.getElementById('shoot');
+        this.audio.src = '../../audio/shoot.wav';
 
         // tracking key press...
         this.keyPress = []; // always track user key press... & its available in all our code base...
@@ -47,7 +48,10 @@ class Game {
         this.enemyInterval = 1000; // 1s second...
 
         // for gears...
-        this.gears = [] // create a holder to hold all gears {objects}...
+        this.gears = []; // create a holder to hold all gears {objects}...
+
+        // for explosions...
+        this.explosions = []; // create a holder to hold all explosions {objects}...
 
         // for score
         this.score = 0;
@@ -66,8 +70,11 @@ class Game {
         this.background.draw(context);
         this.textInfo.draw(context);
         this.player.draw(context);
-        this.enemies.forEach(enemy => enemy.draw(context));
+
         this.gears.forEach(gear => gear.draw(context));
+        this.enemies.forEach(enemy => enemy.draw(context));
+        this.explosions.forEach(explosion => explosion.draw(context));
+
         this.background.layer4.draw(context);
     }
 
@@ -119,7 +126,13 @@ class Game {
 
         // gears operation...
         this.gears.forEach(gear => gear.update());
-        this.gears = this.gears.filter(gear => !gear.markedForDeletion);
+        this.gears = this.gears.filter(gear => !gear.markedForDeletion); // remove gear object
+
+        //===============================================================
+
+        // explosions operation...
+        this.explosions.forEach(explosion => explosion.update(deltaTime));
+        this.explosions = this.explosions.filter(explosion => !explosion.markedForDeletion);
 
         //===============================================================
     }
@@ -134,6 +147,16 @@ class Game {
         else this.enemies.push(new Lucky(this));
     }
 
+    addExplosion(enemy) {
+        const random = Math.random();
+
+        if (random < 1) {
+            this.explosions.push(new SmokeExplosion(
+                this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5
+            ));
+        }
+    }
+
     isCollision(obj1, obj2) {
         return (
             obj1.x + obj1.width > obj2.x &&
@@ -143,11 +166,12 @@ class Game {
         )
     }
 
+    // when enemy hit by player...
     hitByPlayer(enemy) {
-        // when enemy hit by player...
         if (this.isCollision(enemy, this.player)) {
             enemy.markedForDeletion = true;
 
+            this.addExplosion(enemy); // for explosion effects...
             this.gearAnimatedFromEnemy(enemy, true); // multiple gear animation
 
             enemy.type === 'lucky'
@@ -156,9 +180,9 @@ class Game {
         }
     }
 
+    // when enemy hit by bullet/leaser...
     hitByBullet(enemy) {
         // traverse inside bullet holder for collision checking...
-        // when enemy hit by bullet/leaser...
         this.player.bullets.forEach(bullet => {
 
             if (this.isCollision(bullet, enemy)) {
@@ -168,6 +192,8 @@ class Game {
                 this.gearAnimatedFromEnemy(enemy, false); // single gear animation
 
                 if (enemy.lives <= 0) {
+
+                    this.addExplosion(enemy); // for explosion effects...
                     this.gearAnimatedFromEnemy(enemy, true); // multiple gear animation
 
                     enemy.markedForDeletion = true;
@@ -192,9 +218,8 @@ class Game {
     }
 
     gearAnimatedFromEnemy(enemy, isMultiple) {
-
         if (isMultiple) {
-            // get 10 gear's part to animated...
+            // get multiple gear's part to animated...
             for (let i = 0; i < enemy.score; i++) {
                 this.gears.push(new Gears(
                     this,
@@ -204,14 +229,13 @@ class Game {
             }
         } else {
             // get 1 gear part to animated...
-            this.gears.push(new Gears(this,
+            this.gears.push(new Gears(
+                this,
                 enemy.x + enemy.width * .5,
                 enemy.y + enemy.height * .5
             ));
         }
-
     }
-
 }
 
 export default Game;

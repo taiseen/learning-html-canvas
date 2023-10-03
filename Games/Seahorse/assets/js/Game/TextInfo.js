@@ -18,7 +18,7 @@ class TextInfo {
         // for score...
         context.fillStyle = this.color;
         context.font = this.fontSize + 'px ' + this.fontFamily;
-        context.fillText('Score: ' + this.game.score, 20, 40);
+        context.fillText('Score: ' + this.game.score, this.leftMargin, 40);
 
         // for timer
         const formatTime = (this.game.gameTime * 0.001).toFixed(0)
@@ -70,7 +70,7 @@ class TextInfo {
         let numberLastPosition = 0;
         for (let i = 1; i <= this.game.ammo; i++) {
             numberLastPosition = this.leftMargin + 5 * i;
-            context.fillRect(numberLastPosition, 50, 3, 20);
+            context.fillRect(numberLastPosition - 4, 50, 3, 20);
         }
 
         this.game.ammo > 0

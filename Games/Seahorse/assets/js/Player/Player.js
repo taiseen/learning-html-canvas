@@ -104,7 +104,7 @@ class Player {
         if (this.game.ammo > 0) {
             this.bullets.push(new Bullet(this.game, this.x + 80, this.y + topArea)); // store bullet {object's} into bullets holder
             this.game.ammo--;
-            // this.game.audio.play();
+            this.game.audio.play();
         }
 
         if (this.powerUp) this.shootBottom();
