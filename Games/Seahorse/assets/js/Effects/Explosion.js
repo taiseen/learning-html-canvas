@@ -1,10 +1,16 @@
 class Explosion {
     constructor(game, x, y) {
         this.game = game;
-        this.x = x;
-        this.y = y;
 
+        this.imgWidth = 200;
         this.imgHight = 200;
+
+        this.width = this.imgWidth;
+        this.height = this.imgHight;
+
+        this.x = x - this.width * .5;
+        this.y = y - this.height * .5;
+
         this.frameX = 0;
         this.maxFrame = 8;
 

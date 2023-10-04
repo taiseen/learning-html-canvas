@@ -9,6 +9,7 @@ import Gears from "../Effects/Gears.js";
 import Lucky from "../Enemy/Lucky.js";
 import Drone from "../Enemy/Drone.js";
 import TextInfo from "./TextInfo.js";
+import FireExplosion from "../Effects/FireExplosion.js";
 
 // All logic come together... || Brain of this project...
 class Game {
@@ -22,8 +23,7 @@ class Game {
         this.textInfo = new TextInfo(this);
         this.player = new Player(this);
 
-        this.audio = document.getElementById('shoot');
-        this.audio.src = '../../audio/shoot.wav';
+        this.shoot = document.getElementById('shoot');
 
         // tracking key press...
         this.keyPress = []; // always track user key press... & its available in all our code base...
@@ -40,12 +40,12 @@ class Game {
         this.ammo = 20;
         this.maxAmmo = 50;
         this.ammoTimer = 0;
-        this.ammoInterval = 500; // .5 second...
+        this.ammoInterval = 350; // .35 seconds... ammo recharge faster
 
         // for enemy
         this.enemies = []; // create a holder to hold all enemies {objects}...
         this.enemyTimer = 0;
-        this.enemyInterval = 1000; // 1s second...
+        this.enemyInterval = 2000; // 2 seconds...
 
         // for gears...
         this.gears = []; // create a holder to hold all gears {objects}...
@@ -55,12 +55,12 @@ class Game {
 
         // for score
         this.score = 0;
-        this.winningScore = 10;
+        this.winningScore = 100;
 
         // for game time and speed
         this.speed = 1;
         this.gameTime = 0;
-        this.timeLimit = 150000; // 5s
+        this.timeLimit = 40000; // 40 seconds...
         this.gameOver = false;
     }
 
@@ -143,18 +143,17 @@ class Game {
 
         if (random < .3) this.enemies.push(new Angler1(this));
         else if (random < .6) this.enemies.push(new Angler2(this));
-        else if (random < .8) this.enemies.push(new HiveWhale(this));
+        else if (random < .7) this.enemies.push(new HiveWhale(this));
         else this.enemies.push(new Lucky(this));
     }
 
     addExplosion(enemy) {
         const random = Math.random();
+        const args = [this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5];
 
-        if (random < 1) {
-            this.explosions.push(new SmokeExplosion(
-                this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5
-            ));
-        }
+        random < .5
+            ? this.explosions.push(new SmokeExplosion(...args))
+            : this.explosions.push(new FireExplosion(...args));
     }
 
     isCollision(obj1, obj2) {
@@ -176,7 +175,7 @@ class Game {
 
             enemy.type === 'lucky'
                 ? this.player.enterPowerUp()
-                : this.score--;
+                : !this.gameOver && this.score--;
         }
     }
 
@@ -210,8 +209,9 @@ class Game {
                         }
                     }
 
+                    // game over condition
                     if (!this.gameOver) this.score += enemy.score;
-                    if (this.score > this.winningScore) this.gameOver = true;
+                    // if (this.score > this.winningScore) this.gameOver = true;
                 }
             }
         })

@@ -10,7 +10,7 @@ class Canvas {
         this.canvas = document.getElementById('canvas');
         this.context = this.canvas.getContext('2d');
 
-        this.canvas.width = 1400;
+        this.canvas.width = 1200;
         this.canvas.height = 500;
         this.game = new Game(this.canvas.width, this.canvas.height);
 

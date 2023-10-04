@@ -11,7 +11,7 @@ class HiveWhale extends Enemy {
         this.img = document.getElementById('hiveWhale');
         this.enemyFrameY = 0;
 
-        this.lives = 15;
+        this.lives = 20;
         this.score = this.lives; // score point
         this.type = 'hiveWhale';
 

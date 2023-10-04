@@ -11,7 +11,7 @@ class Lucky extends Enemy {
         this.img = document.getElementById('lucky');
         this.enemyFrameY = Math.floor(Math.random() * 2);
 
-        this.lives = 3;
+        this.lives = 5;
         this.score = 15; // score point
         this.type = 'lucky';
     }
