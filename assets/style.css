@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none;
+}
+
+body {
+    padding: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#container {
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    background-color: gainsboro;
+    border-radius: 4px;
+}
+
+#container a {
+    text-align: center;
+    flex-grow: 1;
+    padding: 26px;
+    border-radius: 4px;
+    border: 1px saddlebrown solid;
+    transition: .4s ease;
+    font-size: 26px;
+}
+
+#container a:hover {
+    background-color: aquamarine;
+}
