@@ -32,12 +32,12 @@ const projects = [
         link: './projects/MapCanvas/index.html',
     },
     {
-        name: 'Mouse Move | Click',
+        name: 'Mouse Move & Click',
         link: './projects/MouseMoveClick/index.html',
     },
     {
-        name: 'Physics Pixel',
-        link: './projects/PhysicsPixel/index.html',
+        name: 'Pixel Physics',
+        link: './projects/PixelPhysics/index.html',
     },
     {
         name: 'Read Update Img Pixel', 

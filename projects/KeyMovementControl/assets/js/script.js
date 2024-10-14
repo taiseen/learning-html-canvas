@@ -1,6 +1,6 @@
 // 7 - Sep - 2023
 
-import Shape from './js/Shape.js';
+import Shape from './Shape.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
